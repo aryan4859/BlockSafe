@@ -1,0 +1,39 @@
+# Python
+*.pyc
+*.pyo
+__pycache__/
+env/
+venv/
+*.egg-info/
+*.egg
+
+# Flask specific
+instance/
+*.db
+*.sqlite3
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Flask migrations
+migrations/
+
+# pytest
+.cache/
+
+# pyenv
+.python-version
+
+# VS Code
+.vscode/
+
+# IDEs
+.idea/
+
+# Solidity
+*.soli/
+*.sol.~lock
+*.abi
+*.bin
+*.dbg
+*.d.ts

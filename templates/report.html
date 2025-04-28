@@ -1,0 +1,40 @@
+<!-- templates/report.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Audit Report</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Audit Results</h1>
+
+    {% for result in audit_results %}
+    <div class="contract-report">
+        <h2>Contract: {{ result.contract }}</h2>
+
+        <h3>Findings:</h3>
+        <ul>
+            {% for finding in result.findings %}
+            <li>{{ finding }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Advanced Findings (Slither):</h3>
+        <ul>
+            {% for advanced_finding in result.advanced_findings %}
+            <li>{{ advanced_finding }}</li>
+            {% endfor %}
+        </ul>
+
+        <p>
+            <a href="{{ url_for('report', filename=result.contract.split('.')[0] + '_audit_report.pdf') }}" target="_blank">
+                Download PDF Report
+            </a>
+        </p>
+    </div>
+    <hr>
+    {% endfor %}
+
+</body>
+</html>

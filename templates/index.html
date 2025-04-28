@@ -1,0 +1,22 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlockSafe Blockchain Auditing</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to BlockSafe Blockchain Auditing</h1>
+        <p>Upload your smart contract(s) and get a security audit!</p>
+
+        <form action="/" method="POST" enctype="multipart/form-data">
+            <label for="contract_files">Upload Solidity Contract(s) (.sol)</label>
+            <input type="file" name="contract_files" id="contract_files" multiple required>
+            <button type="submit">Upload Contract(s)</button>
+        </form>
+    </div>
+</body>
+</html>
