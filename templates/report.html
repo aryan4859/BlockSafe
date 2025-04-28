@@ -1,10 +1,110 @@
-<!-- templates/report.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Audit Report</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Inline CSS for quick styling (move to styles.css for better organization) */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333333;
+        }
+
+        .contract-report {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        h3 {
+            color: #333333;
+            margin-top: 20px;
+        }
+
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .summary-table th, .summary-table td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        .summary-table th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .collapsible {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            padding: 10px;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 16px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        .collapsible:hover {
+            background-color: #0056b3;
+        }
+
+        .content {
+            padding: 0 20px;
+            display: none;
+            overflow: hidden;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: #dddddd;
+            margin: 20px 0;
+        }
+    </style>
 </head>
 <body>
     <h1>Audit Results</h1>
@@ -13,20 +113,45 @@
     <div class="contract-report">
         <h2>Contract: {{ result.contract }}</h2>
 
-        <h3>Findings:</h3>
-        <ul>
-            {% for finding in result.findings %}
-            <li>{{ finding }}</li>
-            {% endfor %}
-        </ul>
+        <!-- Summary Table -->
+        <table class="summary-table">
+            <tr>
+                <th>Category</th>
+                <th>Details</th>
+            </tr>
+            <tr>
+                <td>Total Findings</td>
+                <td>{{ result.findings | length }}</td>
+            </tr>
+            <tr>
+                <td>Advanced Findings</td>
+                <td>{{ result.advanced_findings | length }}</td>
+            </tr>
+        </table>
 
-        <h3>Advanced Findings (Slither):</h3>
-        <ul>
-            {% for advanced_finding in result.advanced_findings %}
-            <li>{{ advanced_finding }}</li>
-            {% endfor %}
-        </ul>
+        <!-- Collapsible Findings Section -->
+        <button class="collapsible">Findings</button>
+        <div class="content">
+            <h3>Findings:</h3>
+            <ul>
+                {% for finding in result.findings %}
+                <li>{{ finding }}</li>
+                {% endfor %}
+            </ul>
+        </div>
 
+        <!-- Collapsible Advanced Findings Section -->
+        <button class="collapsible">Advanced Findings (Slither)</button>
+        <div class="content">
+            <h3>Advanced Findings (Slither):</h3>
+            <ul>
+                {% for advanced_finding in result.advanced_findings %}
+                <li>{{ advanced_finding }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Download Report -->
         <p>
             <a href="{{ url_for('report', filename=result.contract.split('.')[0] + '_audit_report.pdf') }}" target="_blank">
                 Download PDF Report
@@ -36,5 +161,21 @@
     <hr>
     {% endfor %}
 
+    
+    <script>
+        // JavaScript for collapsible sections
+        const collapsibles = document.querySelectorAll(".collapsible");
+        collapsibles.forEach(button => {
+            button.addEventListener("click", function() {
+                this.classList.toggle("active");
+                const content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        });
+    </script>
 </body>
 </html>
