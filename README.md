@@ -1,4 +1,4 @@
-# Dark Web Monitoring and Smart Contract Auditing Tool
+# Smart Contract Auditing Tool
 
 This project is a Flask-based web application for auditing Solidity smart contracts. It performs security audits and generates detailed reports based on the code quality and potential vulnerabilities of the smart contracts. The tool integrates with Slither for advanced analysis of Solidity code and provides downloadable PDF reports for each audit.
 
